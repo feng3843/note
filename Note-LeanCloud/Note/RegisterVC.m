@@ -28,8 +28,11 @@
     user.username = self.name.text.length > 0 ?self.name.text:nil;// 设置用户名
     user.password =  self.password.text.length > 0 ?self.password.text:nil;// 设置密码
 
+    
     if(user.username && user.password){
+    [MBProgressHUD showMessage:@"注册中..." toView:self.view];
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view];
         if (succeeded) {
             // 注册成功
             [MBProgressHUD showSuccess:@"注册成功！请登陆！"];

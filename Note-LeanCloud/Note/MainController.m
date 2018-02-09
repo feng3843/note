@@ -18,6 +18,8 @@
 #import <AVOSCloud/AVOSCloud.h>
 #import "MJExtension.h"
 #import "LoginVC.h"
+#import "UIImage+Resize.h"
+#import "HexColors.h"
 
 @interface MainController ()<UITableViewDelegate,UITableViewDataSource,BillCellDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
@@ -38,12 +40,89 @@
 @property (weak, nonatomic) IBOutlet UILabel *yulL;
 @property (weak, nonatomic) IBOutlet UILabel *qtL;
 @property (weak, nonatomic) IBOutlet UIButton *addnewbtn;
-
-
-
+@property (nonatomic,strong) UIButton  * CurrentSelBtn;
+@property (nonatomic,strong) NSArray  * cpyDataArray;
 @end
 
 @implementation MainController
+
+- (IBAction)btnClick:(UIButton *)btn {
+    /*
+    0衣服  1饮食  2居住 3交通 4人情往来 5医疗 6娱乐 7其他
+    **/
+    btn.selected = !btn.selected;
+    [btn setBackgroundImage:[UIImage imageWithColor:[UIColor hx_colorWithHexRGBAString:@"44ff88"] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+    if (btn == self.CurrentSelBtn) {
+        self.CurrentSelBtn.selected = NO;
+        self.CurrentSelBtn = nil;
+    }else{
+        self.CurrentSelBtn.selected = NO;
+        self.CurrentSelBtn = btn;
+    }
+}
+
+-(void)setCurrentSelBtn:(UIButton *)CurrentSelBtn{
+    _CurrentSelBtn = CurrentSelBtn;
+    NSString *kindStr;
+    switch (CurrentSelBtn.tag) {
+        case 0:{
+        kindStr = @"衣服";
+          break;
+        }
+        case 1:{
+            kindStr = @"饮食";
+            break;
+        }
+        case 2:{
+            kindStr = @"居住";
+            break;
+        }
+        case 3:{
+            kindStr = @"交通";
+            break;
+        }
+        case 4:{
+            kindStr = @"人情往来";
+            break;
+        }
+        case 5:{
+            kindStr = @"医疗";
+            break;
+        }
+        case 6:{
+            kindStr = @"娱乐";
+            break;
+        }
+        case 7:{
+            kindStr = @"其他";
+            break;
+        }
+        default:
+            break;
+    }
+    if (CurrentSelBtn == nil) {
+        kindStr = @"";
+    }
+    [self queryDataArrayByKind:kindStr];
+}
+
+-(void)queryDataArrayByKind:(NSString *)kindStr{
+    if ([kindStr isEqualToString:@""]) {
+        self.dataArray = [self.cpyDataArray mutableCopy];
+        [self.tableView reloadData];
+        return;
+    }
+    
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (int i = 0 ; i< self.cpyDataArray.count; i++) {
+        Bill *bill = self.cpyDataArray[i];
+        if ([bill.kind isEqualToString:kindStr]) {
+            [tempArray addObject:bill];
+        }
+    }
+    self.dataArray = tempArray;
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -169,6 +248,8 @@
 }
 
 -(void)queryDataArrayWithDate:(NSString *)date{
+    self.CurrentSelBtn.selected = NO;
+    self.CurrentSelBtn = nil;
     AVQuery *query = [AVQuery queryWithClassName:@"Bill"];
     [query whereKey:@"owner" equalTo:[AVUser currentUser]];
     if (date != nil) {
@@ -176,7 +257,9 @@
     }
     query.limit = 1000;
     [query orderByDescending:@"date"];
+    [MBProgressHUD showMessage:@"数据同步中..." toView:self.view];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        [MBProgressHUD hideHUDForView:self.view];
         if (error) {
             NSLog(@"chucuol %@",error);
             [MBProgressHUD showError:@"同步数据失败，请检查网络，稍后再试！"];
@@ -230,6 +313,7 @@
         self.ylL.text = [NSString stringWithFormat:@"%.2f 元",yl];
         self.yulL.text = [NSString stringWithFormat:@"%.2f 元",yul];
         self.qtL.text = [NSString stringWithFormat:@"%.2f 元",qt];
+        self.cpyDataArray = [self.dataArray copy];
         [self.tableView reloadData];
     }];
 }

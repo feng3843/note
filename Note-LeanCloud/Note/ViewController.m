@@ -97,6 +97,7 @@
     if (self.date) {
         timeStr = self.date;
     }
+    [MBProgressHUD showMessage:@"正在处理..." toView:self.view];
     if(self.bill){
         //修改
         // 第一个参数是 className，第二个参数是 objectId
@@ -108,6 +109,7 @@
         [billOBJ setObject:detail forKey:@"detail"];
         // 保存到云端
         [billOBJ saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            [MBProgressHUD hideHUDForView:self.view];
             if (succeeded) {
                 [MBProgressHUD showSuccess:@"修改成功！"];
                 if (self.needRefreshData) {
@@ -131,6 +133,7 @@
         [billOBJ setObject:timeStr forKey:@"date"];
         [billOBJ setObject:detail forKey:@"detail"];
         [billOBJ saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view];
             if (succeeded) {
                 [MBProgressHUD showSuccess:@"上传成功"];
                 if (self.needRefreshData) {
@@ -163,7 +166,9 @@
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         AVObject *billOBJ =[AVObject objectWithClassName:@"Bill" objectId:self.bill.objectId];
+        [MBProgressHUD showMessage:@"正在处理..." toView:self.view];
         [billOBJ deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            [MBProgressHUD hideHUDForView:self.view];
             if (succeeded) {
                 [MBProgressHUD showSuccess:@"成功删除！"];
                 if (self.needRefreshData) {

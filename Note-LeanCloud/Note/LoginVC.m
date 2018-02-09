@@ -48,8 +48,9 @@
         [MBProgressHUD showError:@"用户名密码不能为空！"];
         return;
     }
+    [MBProgressHUD showMessage:@"登录中..." toView:self.view];
     [AVUser logInWithUsernameInBackground:name password:password block:^(AVUser *user, NSError *error) {
-        
+        [MBProgressHUD hideHUDForView:self.view];
         if(error) [MBProgressHUD showError:@"登录失败！"];
         if (user) {
             [[NSUserDefaults standardUserDefaults] setValue:name forKeyPath:@"name"];

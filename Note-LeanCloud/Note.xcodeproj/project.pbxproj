@@ -55,6 +55,8 @@
 		D98014C21FC561FB0045B791 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D98014B11FC561FB0045B791 /* IQKeyboardManager.bundle */; };
 		D98014C31FC561FB0045B791 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = D98014B21FC561FB0045B791 /* LICENSE.md */; };
 		D98014C41FC561FB0045B791 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D98014B31FC561FB0045B791 /* README.md */; };
+		D98B1535202D811E00E32D13 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = D98B1534202D811E00E32D13 /* UIImage+Resize.m */; };
+		D98B1538202D812C00E32D13 /* HexColors.m in Sources */ = {isa = PBXBuildFile; fileRef = D98B1537202D812C00E32D13 /* HexColors.m */; };
 		D98F389C1FC6B7B2006F38D8 /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98F389B1FC6B7B2006F38D8 /* AVOSCloud.framework */; };
 		D98F389E1FC6B7E5006F38D8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D98F389D1FC6B7E5006F38D8 /* libz.tbd */; };
 		D98F38A01FC6B7EF006F38D8 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D98F389F1FC6B7EF006F38D8 /* libc++.tbd */; };
@@ -163,6 +165,10 @@
 		D98014B11FC561FB0045B791 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		D98014B21FC561FB0045B791 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		D98014B31FC561FB0045B791 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D98B1533202D811E00E32D13 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "fmdb/UIImage+Resize.h"; sourceTree = "<group>"; };
+		D98B1534202D811E00E32D13 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "fmdb/UIImage+Resize.m"; sourceTree = "<group>"; };
+		D98B1536202D812C00E32D13 /* HexColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HexColors.h; path = fmdb/HexColors.h; sourceTree = "<group>"; };
+		D98B1537202D812C00E32D13 /* HexColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HexColors.m; path = fmdb/HexColors.m; sourceTree = "<group>"; };
 		D98F389B1FC6B7B2006F38D8 /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVOSCloud.framework; path = fmdb/AVOSCloud.framework; sourceTree = "<group>"; };
 		D98F389D1FC6B7E5006F38D8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D98F389F1FC6B7EF006F38D8 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -254,6 +260,10 @@
 				D980145D1FC523070045B791 /* fmdb */,
 				D98014461FC5114E0045B791 /* AppDelegate.h */,
 				D98014471FC5114E0045B791 /* AppDelegate.m */,
+				D98B1536202D812C00E32D13 /* HexColors.h */,
+				D98B1537202D812C00E32D13 /* HexColors.m */,
+				D98B1533202D811E00E32D13 /* UIImage+Resize.h */,
+				D98B1534202D811E00E32D13 /* UIImage+Resize.m */,
 				D980147B1FC543D30045B791 /* edit@2x.png */,
 				D98014731FC52C0D0045B791 /* Bill.h */,
 				D98014741FC52C0D0045B791 /* Bill.m */,
@@ -508,6 +518,7 @@
 				D98014791FC542640045B791 /* BillCell.m in Sources */,
 				D97AFE2E202AC52400D083EE /* NSString+MJExtension.m in Sources */,
 				D97AFE2B202AC52400D083EE /* NSObject+MJCoding.m in Sources */,
+				D98B1535202D811E00E32D13 /* UIImage+Resize.m in Sources */,
 				D9B5A2221FC661DF0066FC57 /* HexColors.m in Sources */,
 				D98014C11FC561FB0045B791 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				D97AFE2A202AC52400D083EE /* NSObject+MJClass.m in Sources */,
@@ -524,6 +535,7 @@
 				D980146A1FC523070045B791 /* FMDatabase.m in Sources */,
 				D98014BF1FC561FB0045B791 /* IQTitleBarButtonItem.m in Sources */,
 				D97AFE27202AC52400D083EE /* MJProperty.m in Sources */,
+				D98B1538202D812C00E32D13 /* HexColors.m in Sources */,
 				D9243CE81FFC85480097C7B1 /* LoginVC.m in Sources */,
 				D97AFE2D202AC52400D083EE /* NSObject+MJProperty.m in Sources */,
 				D980146C1FC523070045B791 /* FMDatabasePool.m in Sources */,
