@@ -65,6 +65,9 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"BillCell" bundle:nil] forCellReuseIdentifier:@"BillCell"];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
+    [self queryDataArrayWithDate:self.pickdate];
  
 }
 
@@ -87,17 +90,25 @@
 - (IBAction)addnew:(UIButton *)sender {  
     UIStoryboard *board = [UIStoryboard storyboardWithName: @"Main" bundle: nil];
     ViewController *vc = [board instantiateViewControllerWithIdentifier: @"ViewController"];
+    __weak typeof(self) wkself = self;
+    vc.needRefreshData = ^(BOOL flag){
+        if (flag) [wkself queryDataArrayWithDate:wkself.pickdate];
+    };
     [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self queryDataArrayWithDate:self.pickdate];
+//    [self queryDataArrayWithDate:self.pickdate];
 }
 
 -(void)didEdit:(Bill *)bill{
     UIStoryboard *board = [UIStoryboard storyboardWithName: @"Main" bundle: nil];
     ViewController *vc = [board instantiateViewControllerWithIdentifier: @"ViewController"];
+    __weak typeof(self) wkself = self;
+    vc.needRefreshData = ^(BOOL flag){
+        if (flag) [wkself queryDataArrayWithDate:wkself.pickdate];
+    };
     vc.bill = bill;
     [self presentViewController:vc animated:YES completion:nil];
 
@@ -107,8 +118,7 @@
 
 - (IBAction)pick:(UIButton *)sender {
     //开始时间
-    TimePick *pick = [TimePick new];
-    pick.onlyShowYearAndMonth = YES;
+    TimePick *pick = [TimePick timePcikWithStyle:TimePickStyleOnlyShowYearAndMonth];
     pick.selectBlock = ^(NSString *str){
         if (str.length > 0) {
             NSLog(@"%@",str);
@@ -162,7 +172,7 @@
     AVQuery *query = [AVQuery queryWithClassName:@"Bill"];
     [query whereKey:@"owner" equalTo:[AVUser currentUser]];
     if (date != nil) {
-        [query whereKey:@"date" greaterThanOrEqualTo:date];
+        [query whereKey:@"date" containsString:date];
     }
     query.limit = 1000;
     [query orderByDescending:@"date"];

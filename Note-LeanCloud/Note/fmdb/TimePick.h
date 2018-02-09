@@ -9,15 +9,24 @@
 #import <UIKit/UIKit.h>
 
 typedef void (^MyBasicBlock)(id result);
+
+typedef NS_ENUM(NSInteger, TimePickStyle){
+    TimePickStyleAll,
+    TimePickStyleOnlyShowYear,
+    TimePickStyleOnlyShowYearAndMonth
+};
+
+
 @interface TimePick : UIView
+
++(instancetype)timePcikWithStyle:(TimePickStyle)style;
 
 @property (retain, nonatomic) UIPickerView *pickerView;
 
-@property (nonatomic,assign) BOOL  onlyShowYear;
-
-@property (nonatomic,assign) BOOL  onlyShowYearAndMonth;
-
 @property (nonatomic, copy) MyBasicBlock selectBlock;
 
-- (void)popPickerView;
+@property (nonatomic,copy) NSString  * selectTime;
+
+-(void)popPickerView;
+
 @end

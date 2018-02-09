@@ -23,11 +23,37 @@
     NSMutableArray *monthArray;
     NSMutableArray *dayArray;
 }
+/**只显示年*/
+@property (nonatomic,assign) BOOL  onlyShowYear;
+
+/**只显示年和月*/
+@property (nonatomic,assign) BOOL  onlyShowYearAndMonth;
 @end
 
 @implementation TimePick
--(instancetype)init{
-    self = [super init];
+
++(instancetype)timePcikWithStyle:(TimePickStyle)style{
+    TimePick *timePick = [[TimePick alloc]init];
+    if (style == TimePickStyleOnlyShowYear) {
+        timePick.onlyShowYear = YES;
+        timePick.onlyShowYearAndMonth = NO;
+    }else if (style == TimePickStyleOnlyShowYearAndMonth){
+        timePick.onlyShowYearAndMonth = YES;
+        timePick.onlyShowYear = NO;
+    }else{
+        timePick.onlyShowYearAndMonth = NO;
+        timePick.onlyShowYear = NO;
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设置格式：zzz表示时区
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *timeStr = [dateFormatter stringFromDate:[NSDate date]];
+    timePick.selectTime = timeStr;
+    return timePick;
+}
+
+-(instancetype)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
     if(self){
         [self setUI];
     }
@@ -229,6 +255,41 @@
     }else{
         return (screenW - 90) /3.0 ;
     }
+}
+
+-(void)setSelectTime:(NSString *)selectTime{
+    _selectTime = selectTime;
+    if (selectTime.length < 4) return;
+    NSString *year = [selectTime substringToIndex:4];
+    //设置年
+    for (int i = 0; i < yearArray.count; i ++) {
+        if ([year intValue] == [yearArray[i] intValue]) {
+            [self.pickerView selectRow:i inComponent:0 animated:NO];
+        }
+    }
+    
+    if (self.onlyShowYear) return;
+    //设置月
+    if (selectTime.length < 7) return;
+    NSString *month = [selectTime substringWithRange:NSMakeRange(5, 2)];
+    for (int i = 0; i < monthArray.count; i ++) {
+        if ([month intValue] == [monthArray[i] intValue]) {
+            [self.pickerView selectRow:i inComponent:1 animated:NO];
+        }
+    }
+    
+    if (self.onlyShowYearAndMonth) return;
+    //设置日
+    if (selectTime.length < 10) return;
+    NSString *day = [selectTime substringWithRange:NSMakeRange(8, 2)];
+    for (int i = 0; i < dayArray.count; i ++) {
+        if ([day intValue] == [dayArray[i] intValue]) {
+            [self.pickerView selectRow:i inComponent:2 animated:NO];
+        }
+    }
+    
+    
+    
 }
 
 #pragma mark - UIPickerViewDelegate

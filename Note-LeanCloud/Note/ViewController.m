@@ -110,9 +110,13 @@
         [billOBJ saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if (succeeded) {
                 [MBProgressHUD showSuccess:@"修改成功！"];
+                if (self.needRefreshData) {
+                    self.needRefreshData(YES);
+                }
                 [self dismissViewControllerAnimated:YES completion:nil];
             }else{
-                [MBProgressHUD showError:@"修改失败，稍后再试！"];
+                NSDictionary *dict = error.userInfo;
+                [MBProgressHUD showError:[NSString stringWithFormat:@"修改失败：%@",dict[@"error"]]];
             }
         }];
     }else{
@@ -129,6 +133,9 @@
         [billOBJ saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 [MBProgressHUD showSuccess:@"上传成功"];
+                if (self.needRefreshData) {
+                    self.needRefreshData(YES);
+                }
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if(error.code == 137){
@@ -159,9 +166,13 @@
         [billOBJ deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if (succeeded) {
                 [MBProgressHUD showSuccess:@"成功删除！"];
+                if (self.needRefreshData) {
+                    self.needRefreshData(YES);
+                }
                 [self back:nil];
             }else{
-                [MBProgressHUD showError:@"数据出错！稍后重试！"];
+                NSDictionary *dict = error.userInfo;
+                [MBProgressHUD showError:[NSString stringWithFormat:@"操作失败！%@",dict[@"error"]]];
             }
         }];
     }];
@@ -174,7 +185,8 @@
 
 - (IBAction)selectDate:(id)sender {
     //开始时间
-    TimePick *pick = [TimePick new];
+    TimePick *pick = [TimePick timePcikWithStyle:0];
+    pick.selectTime = self.date;
     pick.selectBlock = ^(NSString *str){
         if (str.length > 0) {
             NSLog(@"%@",str);
