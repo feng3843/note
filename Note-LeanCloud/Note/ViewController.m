@@ -51,6 +51,7 @@
     if (self.bill) {
         self.kind = self.bill.kind;
         self.date = self.bill.date;
+        self.dateL.text = self.date;
         self.kindL.text = self.kind;
         self.count.text = [NSString stringWithFormat:@"%.2f",self.bill.count];
         self.detial.text = self.bill.detail;

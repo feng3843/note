@@ -202,6 +202,8 @@
         if (str.length > 0) {
             NSLog(@"%@",str);
             self.pickdate = str;
+        }else{
+            self.pickdate = nil;
         }
     };
     [[UIApplication sharedApplication].keyWindow addSubview:pick];
@@ -220,7 +222,7 @@
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [AVUser logOut];  //清除缓存用户对象
         AVUser *currentUser = [AVUser currentUser];
-        [self setOrUpdateUserOnLocal:currentUser];
+//        [self setOrUpdateUserOnLocal:currentUser];
         if (currentUser == nil) {
             UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             LoginVC *loginVc = [sb instantiateViewControllerWithIdentifier:@"LoginVC"];
