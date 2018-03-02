@@ -16,9 +16,9 @@
 
 @interface TimePick () <UIPickerViewDelegate,UIPickerViewDataSource>
 {
-    NSInteger selectYear;
-    NSInteger selectMonth;
-    NSInteger selectDay;
+    NSInteger selectYearIndex;
+    NSInteger selectMonthIndex;
+    NSInteger selectDayIndex;
     NSMutableArray *yearArray;
     NSMutableArray *monthArray;
     NSMutableArray *dayArray;
@@ -103,8 +103,8 @@
     int year = (int)[calendar component:NSCalendarUnitYear fromDate:date];
     yearArray = [NSMutableArray array];
     for (int i = 0 ; i < 80 ; i++){
-        if (year - i > 2015) {
-        [yearArray addObject:[NSNumber numberWithInt:year - i]];
+        if (year - i > 2009) {
+            [yearArray addObject:[NSNumber numberWithInt:year - i]];
         }else{
             break;
         }
@@ -140,19 +140,19 @@
 
 -(void)pickerViewBtnOK{
     if (self.selectBlock) {
-        int year = [yearArray[selectYear] intValue];
+        int year = [yearArray[selectYearIndex] intValue];
         NSString *str;
         if(self.onlyShowYear){
             str = [NSString stringWithFormat:@"%d",year];
         }else if(self.onlyShowYearAndMonth){
-            selectMonth = [self.pickerView selectedRowInComponent:1];
-            int month = [monthArray[selectMonth] intValue];
+            selectMonthIndex = [self.pickerView selectedRowInComponent:1];
+            int month = [monthArray[selectMonthIndex] intValue];
             str = [NSString stringWithFormat:@"%d-%02d",year,month];
         }else{
-            selectMonth = [self.pickerView selectedRowInComponent:1];
-            int month = [monthArray[selectMonth] intValue];
-            selectDay = [self.pickerView selectedRowInComponent:2];
-            int day = [dayArray[selectDay] intValue];
+            selectMonthIndex = [self.pickerView selectedRowInComponent:1];
+            int month = [monthArray[selectMonthIndex] intValue];
+            selectDayIndex = [self.pickerView selectedRowInComponent:2];
+            int day = [dayArray[selectDayIndex] intValue];
             str = [NSString stringWithFormat:@"%d-%02d-%02d",year,month,day];
         }
         
@@ -181,29 +181,29 @@
     }else if (component == 1){
         return monthArray.count;
     }else{
-//        if (!self.onlyShowYear && !self.onlyShowYearAndMonth) {
-//            if (selectYear % 4 == 0 && selectMonth == 2) {
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 29 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }else if (selectYear % 4 != 0 && selectMonth == 2) {
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 28 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }else if (selectMonth == 4 ||selectMonth == 6 ||selectMonth == 9 || selectMonth == 11){
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 30 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }else{
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 31 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }
-//        }
+        //        if (!self.onlyShowYear && !self.onlyShowYearAndMonth) {
+        //            if (selectYear % 4 == 0 && selectMonth == 2) {
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 29 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }else if (selectYear % 4 != 0 && selectMonth == 2) {
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 28 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }else if (selectMonth == 4 ||selectMonth == 6 ||selectMonth == 9 || selectMonth == 11){
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 30 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }else{
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 31 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }
+        //        }
         return dayArray.count;
     }
 }
@@ -217,29 +217,29 @@
         int month = [monthArray[row] intValue];
         return [NSString stringWithFormat:@"%02d",month];
     }else{
-//        if (!self.onlyShowYear && !self.onlyShowYearAndMonth) {
-//            if (selectYear % 4 == 0 && selectMonth == 2) {
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 29 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }else if (selectYear % 4 != 0 && selectMonth == 2) {
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 28 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }else if (selectMonth == 4 ||selectMonth == 6 ||selectMonth == 9 || selectMonth == 11){
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 30 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }else{
-//                dayArray = [NSMutableArray array];
-//                for (int i = 1 ; i <= 31 ; i++){
-//                    [dayArray addObject:[NSNumber numberWithInt:i]];
-//                }
-//            }
-//        }
+        //        if (!self.onlyShowYear && !self.onlyShowYearAndMonth) {
+        //            if (selectYear % 4 == 0 && selectMonth == 2) {
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 29 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }else if (selectYear % 4 != 0 && selectMonth == 2) {
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 28 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }else if (selectMonth == 4 ||selectMonth == 6 ||selectMonth == 9 || selectMonth == 11){
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 30 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }else{
+        //                dayArray = [NSMutableArray array];
+        //                for (int i = 1 ; i <= 31 ; i++){
+        //                    [dayArray addObject:[NSNumber numberWithInt:i]];
+        //                }
+        //            }
+        //        }
         int day = [dayArray[row] intValue];
         return [NSString stringWithFormat:@"%02d",day];
     }
@@ -298,38 +298,44 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (component == 0) {
-        selectYear = row;
+        selectYearIndex = row;
     }else if (component == 1){
-        selectMonth = row;
-        if (!self.onlyShowYear && !self.onlyShowYearAndMonth) {
-//            selectMonth是数据下标 所以实际月数要+1
-            if (selectYear % 4 == 0 && selectMonth + 1 == 2) {
+        selectMonthIndex = row;
+        
+    }else{
+        selectDayIndex = row;
+    }
+    
+    int selectYear = [yearArray[selectYearIndex] intValue];
+    if (!self.onlyShowYear && !self.onlyShowYearAndMonth) {
+        NSLog(@"%d",selectYear);
+        //            selectMonth是数据下标 所以实际月数要+1
+        if (selectMonthIndex + 1 == 2){
+            if ((selectYear % 4 == 0 && selectYear % 100 != 0) || (selectYear % 100 == 0 && selectYear % 400 == 0)) {
                 dayArray = [NSMutableArray array];
                 for (int i = 1 ; i <= 29 ; i++){
                     [dayArray addObject:[NSNumber numberWithInt:i]];
                 }
-            }else if (selectYear % 4 != 0 && selectMonth + 1 == 2) {
+                NSLog(@"闰年");
+            }else{
                 dayArray = [NSMutableArray array];
                 for (int i = 1 ; i <= 28 ; i++){
                     [dayArray addObject:[NSNumber numberWithInt:i]];
                 }
-            }else if (selectMonth + 1 == 4 ||selectMonth + 1 == 6 ||selectMonth + 1 == 9 || selectMonth + 1 == 11){
-                dayArray = [NSMutableArray array];
-                for (int i = 1 ; i <= 30 ; i++){
-                    [dayArray addObject:[NSNumber numberWithInt:i]];
-                }
-            }else{
-                dayArray = [NSMutableArray array];
-                for (int i = 1 ; i <= 31 ; i++){
-                    [dayArray addObject:[NSNumber numberWithInt:i]];
-                }
+                NSLog(@"不是闰年");
             }
-            [pickerView reloadComponent:2];
+        }else if (selectMonthIndex + 1 == 4 ||selectMonthIndex + 1 == 6 ||selectMonthIndex + 1 == 9 || selectMonthIndex + 1 == 11){
+            dayArray = [NSMutableArray array];
+            for (int i = 1 ; i <= 30 ; i++){
+                [dayArray addObject:[NSNumber numberWithInt:i]];
+            }
+        }else{
+            dayArray = [NSMutableArray array];
+            for (int i = 1 ; i <= 31 ; i++){
+                [dayArray addObject:[NSNumber numberWithInt:i]];
+            }
         }
-
-        
-    }else{
-        selectDay = row;
+        [pickerView reloadComponent:2];
     }
 }
 
