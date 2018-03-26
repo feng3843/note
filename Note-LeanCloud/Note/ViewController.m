@@ -57,6 +57,13 @@
         self.detial.text = self.bill.detail;
         self.deletebtn.hidden = NO;
         [self.addnewbtn setTitle:@"修改保存" forState:UIControlStateNormal];
+    }else{
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //设置格式：zzz表示时区
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *timeStr = [dateFormatter stringFromDate:[NSDate date]];
+        self.date = timeStr;
+        self.dateL.text = self.date;
     }
     
 }
@@ -91,13 +98,6 @@
         return;
     }
     NSString *detail = self.detial.text;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //设置格式：zzz表示时区
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *timeStr = [dateFormatter stringFromDate:[NSDate date]];
-    if (self.date) {
-        timeStr = self.date;
-    }
     [MBProgressHUD showMessage:@"正在处理..." toView:self.view];
     if(self.bill){
         //修改
@@ -106,7 +106,7 @@
         // 修改属性
         [billOBJ setObject:self.kind forKey:@"kind"];
         [billOBJ setObject:@([self.count.text floatValue]) forKey:@"count"];
-        [billOBJ setObject:timeStr forKey:@"date"];
+        [billOBJ setObject:self.date forKey:@"date"];
         [billOBJ setObject:detail forKey:@"detail"];
         // 保存到云端
         [billOBJ saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -131,7 +131,7 @@
         [billOBJ setObject:currentUser forKey:@"owner"];
         // image 字段为 File 类型
         [billOBJ setObject:@([self.count.text floatValue]) forKey:@"count"];
-        [billOBJ setObject:timeStr forKey:@"date"];
+        [billOBJ setObject:self.date forKey:@"date"];
         [billOBJ setObject:detail forKey:@"detail"];
         [billOBJ saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             [MBProgressHUD hideHUDForView:self.view];

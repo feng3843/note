@@ -127,14 +127,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1];
-    self.selectBtn.backgroundColor = [UIColor hx_colorWithHexRGBAString:@"FFFF00"];
-    self.selectBtn.layer.cornerRadius = 2;
+    self.selectBtn.backgroundColor = [UIColor hx_colorWithHexRGBAString:@"5173b7"];
+    self.selectBtn.layer.cornerRadius = 3;
     self.selectBtn.layer.masksToBounds = YES;
     
     
-    self.addnewbtn.backgroundColor = [UIColor hx_colorWithHexRGBAString:@"0b5fff"];
-    self.addnewbtn.layer.cornerRadius = 4;
-    self.addnewbtn.layer.masksToBounds = YES;
+//    self.addnewbtn.backgroundColor = [UIColor hx_colorWithHexRGBAString:@"0b5fff"];
+//    self.addnewbtn.layer.cornerRadius = 4;
+//    self.addnewbtn.layer.masksToBounds = YES;
     //获取路径
 //    NSString *filepath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 //    NSString *filename = [filepath stringByAppendingPathComponent:@"bill.sqlite"];
@@ -163,7 +163,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 55;
+    return 75;
 }
 
 - (IBAction)addnew:(UIButton *)sender {  

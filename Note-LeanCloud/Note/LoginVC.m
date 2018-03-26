@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *name;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginbtn;
+@property (weak, nonatomic) IBOutlet UIButton *resBTn;
 
 @end
 
@@ -24,7 +25,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.loginbtn.layer.cornerRadius = 4;
+    self.loginbtn.layer.masksToBounds = YES;
+    self.resBTn.layer.cornerRadius = 4;
+    self.resBTn.layer.masksToBounds = YES;
+    
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
